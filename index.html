@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elf Bar Cartel · Freiburg</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+<style>
+:root{--blue:#2AABEE;--blue2:#7cc8ff;--navy:#0f1a2c;--navyl:#1d3557;--bg:#0a0a0b;--card:#151517;--card2:#1c1b1f;--line:#2a2620;--text:#f3ecd8;--muted:#9c9585;--gold:#e2b84f;--gold2:#f5d77a;--ok:#5dcaa5}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.wrap{max-width:560px;margin:0 auto;padding:14px 14px 110px}
+header{position:relative;display:flex;justify-content:center;margin:2px 0 14px}
+header .logo{height:112px;width:auto;display:block;transition:transform .2s}
+header a:active .logo{transform:scale(.93)}
+header a:hover .logo{transform:scale(1.04)}
+header .langs{position:absolute;top:0;right:0;flex-direction:column}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:.3px}
+.brand img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)}
+.brand .ph{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#f5d77a,#8a6516 60%,#000);display:flex;align-items:center;justify-content:center;color:#000;font-weight:700}
+.langs{display:flex;gap:4px}
+.langs button{padding:5px 9px;border-radius:8px;background:var(--card);color:var(--muted);font-size:13px}
+.langs button.on{background:var(--blue);color:#fff;font-weight:700}
+.langs button{transition:transform .12s}.langs button:active{transform:scale(.9)}
+.search{display:flex;align-items:center;gap:8px;background:var(--navy);border:1px solid var(--navyl);transition:border-color .2s,box-shadow .2s;border-radius:12px;padding:10px 12px;margin-bottom:12px}
+.search:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(42,171,238,.18)}
+.search input{flex:1;background:none;border:0;outline:0;color:var(--text);font:inherit}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.tabs button{padding:10px 2px;border-radius:20px;background:var(--navy);border:1px solid var(--navyl);color:var(--blue2);white-space:nowrap;font-size:13px;font-weight:700;letter-spacing:0;text-align:center;overflow:hidden;text-overflow:ellipsis;transition:transform .15s,background .2s,box-shadow .2s,color .2s}
+.tabs button:hover{border-color:var(--blue);box-shadow:0 0 12px rgba(42,171,238,.35)}
+.tabs button.on{background:linear-gradient(135deg,#f5d77a,#c99a2e);border-color:#f5d77a;color:#1a1308;box-shadow:0 0 14px rgba(226,184,79,.45)}
+.tabs button:active,.card:active,.plus:active,.qty button:active,.opts button:active,.order:active,.bar button:active{transform:scale(.94)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px;text-align:left;transition:transform .2s,border-color .2s,box-shadow .2s;animation:rise .35s ease both}
+.card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 22px rgba(226,184,79,.22)}
+.card:hover .pic img{transform:scale(1.08) rotate(-3deg)}
+.pic img{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.card:nth-child(2n){animation-delay:.05s}.card:nth-child(n+3){animation-delay:.1s}.card:nth-child(n+5){animation-delay:.15s}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(226,184,79,.7)}100%{box-shadow:0 0 0 12px rgba(226,184,79,0)}}
+@keyframes bump{0%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}60%{transform:translateY(2px)}}
+.fl.enter{animation:rise .3s ease both}.fl.just{animation:flash .6s ease-out}.qty b.just{animation:pop .35s ease}
+.bar.just button{animation:bump .45s ease}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.pic{aspect-ratio:1/1;border-radius:12px;background:radial-gradient(circle at 50% 50%,#f5d77a 0%,#c99a2e 22%,#6b4e12 46%,#1a1308 72%,#000 100%);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pic img{width:82%;height:82%;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.pic img.blend{filter:none;mix-blend-mode:multiply;border-radius:8px}
+.pic .ini{font-size:26px;font-weight:700;color:#1a1308;opacity:.75}
+.card .n{font-weight:600;margin-top:8px;font-size:14px}
+.card .c{color:var(--muted);font-size:12px}
+.empty{color:var(--muted);text-align:center;padding:40px 10px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--blue2);font-weight:600;margin-bottom:10px;padding:4px 0}
+.mhead{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.mhead .pic{width:88px;flex:none}
+.mhead h2{margin:0;font-size:19px}
+.mhead p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.fl{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:7px}
+.fl.sel{border-color:var(--gold);background:#1d1910}
+.plus{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#f5d77a,#c99a2e);color:#1a1308;font-size:20px;font-weight:700;flex:none;transition:transform .15s,box-shadow .2s}
+.plus:hover{box-shadow:0 0 12px rgba(245,215,122,.6);transform:scale(1.08)}
+.qty{display:flex;align-items:center;gap:8px;flex:none}
+.qty button{width:30px;height:30px;border-radius:9px;background:var(--navyl);color:#dff1ff;font-size:17px;transition:transform .12s,background .2s}
+.qty button:hover{background:var(--blue)}
+.qty b{min-width:16px;text-align:center}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.bar button{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:532px;margin:0 auto;background:linear-gradient(135deg,#f5d77a,#c99a2e);color:#1a1308;font-weight:700;box-shadow:0 6px 20px rgba(226,184,79,.3);transition:transform .15s;border-radius:14px;padding:14px 16px}
+.toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,10px);transition:opacity .2s,transform .25s!important;background:#0f3d31;color:#bff0dd;padding:9px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90%}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;z-index:5}
+.sheet.on{display:flex}
+.panel{background:#111113;border-top:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:92vh;overflow:auto;padding:16px 14px calc(16px + env(safe-area-inset-bottom))}
+.panel h3{margin:0 0 12px;display:flex;justify-content:space-between;align-items:center}
+.ci{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border-radius:12px;padding:10px 12px;margin-bottom:7px}
+.ci small{display:block;color:var(--muted)}
+.lbl{color:var(--muted);font-size:13px;margin:14px 0 8px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opts button{background:var(--navy);border:1px solid var(--navyl);color:#dff1ff;border-radius:12px;padding:11px 8px;font-weight:600;transition:transform .12s,border-color .2s}
+.opts button:hover{border-color:var(--blue)}
+.opts button.wide{grid-column:1/-1}
+.opts button.on{border-color:var(--gold);background:#1d1910;color:var(--gold2)}
+.err{color:#f09595;font-size:13px;margin-top:8px;min-height:18px}
+.order{width:100%;margin-top:6px;background:#2AABEE;color:#fff;font-weight:700;border-radius:14px;padding:15px;transition:transform .15s,box-shadow .2s}
+.order:hover{box-shadow:0 0 18px rgba(42,171,238,.55)}
+.clear{color:var(--muted);font-size:13px;margin-top:10px;width:100%}
+.gate{position:fixed;inset:0;background:var(--bg);z-index:9;display:none;align-items:center;justify-content:center;text-align:center;padding:24px}
+.gate.on{display:flex}
+.gate .box{max-width:340px}
+.gate .yes{display:block;width:100%;background:var(--gold);color:#000;font-weight:600;border-radius:14px;padding:14px;margin-top:18px}
+.gate .no{color:var(--muted);margin-top:12px}
+</style>
+</head>
+<body>
+<div class="gate" id="gate"><div class="box">
+  <img src="logo.webp" alt="Elf Bar Cartel" style="height:130px;margin-bottom:10px">
+  <h2 id="gTitle"></h2><p id="gText" style="color:var(--muted)"></p>
+  <button class="yes" id="gYes"></button><button class="no" id="gNo"></button>
+</div></div>
+
+<div class="wrap">
+  <header>
+    <a href="https://t.me/c/3423858824" id="logoLink" aria-label="Telegram"><img class="logo" src="logo.webp" alt="Elf Bar Cartel"></a>
+    <div class="langs" id="langs"></div>
+  </header>
+  <div id="view"></div>
+</div>
+
+<div class="bar" id="bar" style="display:none"><button id="openCart"><span id="barText"></span><span>&rarr;</span></button></div>
+<div class="toast" id="toast"></div>
+
+<div class="sheet" id="sheet"><div class="panel">
+  <h3><span id="cTitle"></span><button id="closeCart" aria-label="close" style="font-size:22px;color:var(--muted)">&times;</button></h3>
+  <div id="cItems"></div>
+  <div class="lbl" id="pLabel"></div>
+  <div class="opts" id="pOpts"></div>
+  <div class="err" id="err"></div>
+  <button class="order" id="orderBtn"></button>
+  <button class="clear" id="clearBtn"></button>
+</div></div>
+
+<script>
+const T={
+ uk:{cats:{all:"Все",disposable:"Одноразки",liquid:"Рідини",pod:"Поди"},search:"Пошук моделі або смаку",flavors:n=>n+" "+(n%10==1&&n%100!=11?"смак":(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?"смаки":"смаків"),back:"Назад",choose:"Вибери смаки",added:f=>f+" додано в кошик",cart:"Кошик",items:n=>"Кошик · "+n,open:"Відкрити",pick:"Як отримати",order:"Замовити в Telegram",clear:"Очистити кошик",needPick:"Обери, як отримати замовлення",emptyCat:"Зараз у цій категорії нічого немає",emptyCart:"Кошик порожній",noFound:"Нічого не знайдено",
+  opts:{haid:"Самовивіз Haid",tf:"Самовивіз Technische Fakultät",kirch:"Самовивіз Kirchzarten",del:"Доставка",chat:"Домовимось у чаті"},
+  msgHi:"Привіт! Хочу замовити:",msgPick:{haid:"Хочу забрати: Haid",tf:"Хочу забрати: Technische Fakultät",kirch:"Хочу забрати: Kirchzarten",del:"Хочу доставку",chat:"Місце і час зустрічі домовимось у чаті"},
+  gT:"Тобі вже є 21?",gX:"Магазин нікотинової продукції. Вхід тільки для повнолітніх.",gY:"Так, мені є 21",gN:"Ні"},
+ de:{cats:{all:"Alle",disposable:"Einweg",liquid:"Liquids",pod:"Pods"},search:"Modell oder Geschmack suchen",flavors:n=>n+(n==1?" Geschmack":" Geschmäcker"),back:"Zurück",choose:"Geschmack wählen",added:f=>f+" im Warenkorb",cart:"Warenkorb",items:n=>"Warenkorb · "+n,open:"Öffnen",pick:"Abholung oder Lieferung",order:"In Telegram bestellen",clear:"Warenkorb leeren",needPick:"Wähle Abholung oder Lieferung",emptyCat:"In dieser Kategorie ist gerade nichts da",emptyCart:"Warenkorb ist leer",noFound:"Nichts gefunden",
+  opts:{haid:"Abholung Haid",tf:"Abholung Technische Fakultät",kirch:"Abholung Kirchzarten",del:"Lieferung",chat:"Im Chat absprechen"},
+  msgHi:"Hallo! Ich möchte bestellen:",msgPick:{haid:"Abholung: Haid",tf:"Abholung: Technische Fakultät",kirch:"Abholung: Kirchzarten",del:"Ich möchte Lieferung",chat:"Ort und Zeit sprechen wir im Chat ab"},
+  gT:"Bist du mindestens 21?",gX:"Shop für Nikotinprodukte. Nur für Volljährige.",gY:"Ja, ich bin 21+",gN:"Nein"},
+ ru:{cats:{all:"Все",disposable:"Одноразки",liquid:"Жидкости",pod:"Поды"},search:"Поиск модели или вкуса",flavors:n=>n+" "+(n%10==1&&n%100!=11?"вкус":(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?"вкуса":"вкусов"),back:"Назад",choose:"Выбери вкусы",added:f=>f+" добавлен в корзину",cart:"Корзина",items:n=>"Корзина · "+n,open:"Открыть",pick:"Как получить",order:"Заказать в Telegram",clear:"Очистить корзину",needPick:"Выбери, как получить заказ",emptyCat:"Сейчас в этой категории ничего нет",emptyCart:"Корзина пуста",noFound:"Ничего не найдено",
+  opts:{haid:"Самовывоз Haid",tf:"Самовывоз Technische Fakultät",kirch:"Самовывоз Kirchzarten",del:"Доставка",chat:"Договоримся в чате"},
+  msgHi:"Привет! Хочу заказать:",msgPick:{haid:"Хочу забрать: Haid",tf:"Хочу забрать: Technische Fakultät",kirch:"Хочу забрать: Kirchzarten",del:"Хочу доставку",chat:"Место и время встречи договоримся в чате"},
+  gT:"Тебе уже есть 21?",gX:"Магазин никотиновой продукции. Вход только для совершеннолетних.",gY:"Да, мне есть 21",gN:"Нет"}
+};
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const S={lang:store.get("lang","uk"),cat:"all",model:null,q:"",cart:store.get("cart",{}),pick:store.get("pick",null),off:new Set()};
+const tg=window.Telegram&&Telegram.WebApp; if(tg&&tg.initData!==undefined){try{tg.ready();tg.expand();tg.setHeaderColor&&tg.setHeaderColor("#0a0a0b");tg.setBackgroundColor&&tg.setBackgroundColor("#0a0a0b")}catch(e){}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const t=()=>T[S.lang];
+const FL={};const MODEL={};
+for(const c in CATALOG)for(const m of CATALOG[c]){MODEL[m.id]=m;for(const f of m.flavors)FL[f.id]={...f,model:m.name}}
+const avail=m=>m.flavors.filter(f=>!S.off.has(f.id));
+const ini=n=>n.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();
+const pic=m=>`<div class="pic">${m.img?`<img loading="lazy" class="${m.blend?"blend":""}" src="${m.img}" alt="" onerror="this.outerHTML='<span class=ini>${esc(ini(m.name))}</span>'">`:`<span class="ini">${esc(ini(m.name))}</span>`}</div>`;
+function save(){store.set("cart",S.cart);store.set("pick",S.pick)}
+function count(){return Object.values(S.cart).reduce((a,b)=>a+b,0)}
+
+function render(){
+  document.documentElement.lang=S.lang==="uk"?"uk":S.lang;
+  $("langs").innerHTML=["uk","de","ru"].map(l=>`<button class="${l===S.lang?"on":""}" data-l="${l}">${l==="uk"?"UA":l.toUpperCase()}</button>`).join("");
+  S.model?renderModel():renderList();
+  const n=count(); $("bar").style.display=n?"block":"none"; $("barText").textContent=t().items(n);
+  if($("sheet").classList.contains("on"))renderCart();
+}
+function renderList(){
+  const q=S.q.trim().toLowerCase();
+  let models;
+  if(q){models=Object.values(CATALOG).flat().filter(m=>avail(m).length&&(m.name.toLowerCase().includes(q)||avail(m).some(f=>f.name.toLowerCase().includes(q))))}
+  else models=(S.cat==="all"?Object.values(CATALOG).flat():CATALOG[S.cat]).filter(m=>avail(m).length);
+  $("view").innerHTML=`
+   <div class="search"><span style="color:var(--muted)">&#9906;</span><input id="q" placeholder="${esc(t().search)}" value="${esc(S.q)}"></div>
+   ${q?"":`<div class="tabs">${["all",...Object.keys(CATALOG)].map(c=>`<button class="${c===S.cat?"on":""}" data-c="${c}">${t().cats[c]}</button>`).join("")}</div>`}
+   ${models.length?`<div class="grid">${models.map(m=>`<button class="card" data-m="${m.id}">${pic(m)}<div class="n">${esc(m.name)}</div><div class="c">${t().flavors(avail(m).length)}</div></button>`).join("")}</div>`:`<div class="empty">${q?t().noFound:t().emptyCat}</div>`}`;
+  const inp=$("q"); inp.oninput=e=>{S.q=e.target.value;const pos=e.target.selectionStart;renderList();const n=$("q");n.focus();n.setSelectionRange(pos,pos)};
+}
+function renderModel(){
+  const m=MODEL[S.model]; const fl=avail(m); const q=S.q.trim().toLowerCase();
+  const list=q&&!m.name.toLowerCase().includes(q)?fl.filter(f=>f.name.toLowerCase().includes(q)).concat(fl.filter(f=>!f.name.toLowerCase().includes(q))):fl;
+  $("view").innerHTML=`
+   <button class="back" id="back">&larr; ${t().back}</button>
+   <div class="mhead">${pic(m)}<div><h2>${esc(m.name)}</h2><p>${t().choose}</p></div></div>
+   ${list.map((f,i)=>{const n=S.cart[f.id]||0;return `<div class="fl ${n?"sel":""} ${JUST===f.id?"just":""} ${ENTER?"enter":""}" style="animation-delay:${Math.min(i,10)*.03}s"><span>${esc(f.name)}</span>${n?`<div class="qty"><button data-d="${f.id}" aria-label="-">&minus;</button><b class="${JUST===f.id?"just":""}">${n}</b><button data-a="${f.id}" aria-label="+">+</button></div>`:`<button class="plus" data-a="${f.id}" aria-label="+">+</button>`}</div>`}).join("")}
+   ${list.length?"":`<div class="empty">${t().emptyCat}</div>`}`;
+  $("back").onclick=()=>{S.model=null;render();scrollTo(0,0)};
+}
+let tt;function toast(s){const e=$("toast");e.textContent=s;e.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("on"),1400)}
+let JUST=null,ENTER=false;function add(id){const was=S.cart[id]||0;S.cart[id]=was+1;save();if(!was)toast(t().added(FL[id].name));try{tg&&tg.HapticFeedback&&tg.HapticFeedback.impactOccurred("light")}catch(e){}JUST=id;render();JUST=null;const bar=$("bar");bar.classList.remove("just");void bar.offsetWidth;bar.classList.add("just")}
+function dec(id){if(!S.cart[id])return;S.cart[id]--;if(!S.cart[id])delete S.cart[id];save();render()}
+function renderCart(){
+  const ids=Object.keys(S.cart).filter(id=>FL[id]);
+  $("cTitle").textContent=t().cart;
+  $("cItems").innerHTML=ids.length?ids.map(id=>`<div class="ci"><div>${esc(FL[id].model)}<small>${esc(FL[id].name)}</small></div><div class="qty"><button data-d="${id}">&minus;</button><b>${S.cart[id]}</b><button data-a="${id}">+</button></div></div>`).join(""):`<div class="empty">${t().emptyCart}</div>`;
+  $("pLabel").textContent=t().pick;
+  $("pOpts").innerHTML=["haid","tf","kirch","del","chat"].map(k=>`<button class="${S.pick===k?"on":""}${k==="chat"?" wide":""}" data-p="${k}">${t().opts[k]}</button>`).join("");
+  $("orderBtn").textContent=t().order; $("clearBtn").textContent=t().clear;
+  $("orderBtn").style.display=$("clearBtn").style.display=ids.length?"block":"none";
+}
+function order(){
+  const ids=Object.keys(S.cart).filter(id=>FL[id]);
+  if(!ids.length)return;
+  if(!S.pick){$("err").textContent=t().needPick;return}
+  const lines=[t().msgHi,...ids.map(id=>`• ${FL[id].model} — ${FL[id].name} ×${S.cart[id]}`),"",t().msgPick[S.pick]];
+  const url="https://t.me/"+SHOP_CONFIG.ORDER_USERNAME+"?text="+encodeURIComponent(lines.join("\n"));
+  if(tg&&tg.initData&&tg.openTelegramLink){tg.openTelegramLink(url)}else{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  if(b.dataset.l){S.lang=b.dataset.l;store.set("lang",S.lang);render()}
+  else if(b.dataset.c){S.cat=b.dataset.c;render()}
+  else if(b.dataset.m){S.model=b.dataset.m;ENTER=true;render();ENTER=false;scrollTo(0,0)}
+  else if(b.dataset.a)add(b.dataset.a);
+  else if(b.dataset.d)dec(b.dataset.d);
+  else if(b.dataset.p){S.pick=b.dataset.p;save();$("err").textContent="";renderCart()}
+});
+$("openCart").onclick=()=>{$("err").textContent="";$("sheet").classList.add("on");renderCart()};
+$("closeCart").onclick=()=>$("sheet").classList.remove("on");
+$("sheet").onclick=e=>{if(e.target.id==="sheet")$("sheet").classList.remove("on")};
+$("orderBtn").onclick=order;
+$("logoLink").onclick=e=>{if(tg&&tg.initData&&tg.openTelegramLink){e.preventDefault();tg.openTelegramLink("https://t.me/c/3423858824")}else{e.preventDefault();const a=document.createElement("a");a.href="https://t.me/c/3423858824";a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}};
+$("clearBtn").onclick=()=>{S.cart={};save();$("sheet").classList.remove("on");render()};
+function gate(){
+  const g=$("gate"); if(store.get("age_ok",false)){g.classList.remove("on");return}
+  g.classList.add("on");$("gTitle").textContent=t().gT;$("gText").textContent=t().gX;$("gYes").textContent=t().gY;$("gNo").textContent=t().gN;
+}
+$("gYes").onclick=()=>{store.set("age_ok",true);gate()};
+$("gNo").onclick=()=>{$("gText").textContent="🚫"};
+render();
+Avail.load().then(off=>{S.off=off;for(const id of Object.keys(S.cart))if(off.has(id))delete S.cart[id];save();render()});
+</script>
+</body>
+</html>
