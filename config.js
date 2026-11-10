@@ -1,6 +1,6 @@
 window.SHOP_CONFIG = {
   // Посилання на Google Apps Script (таблиця "Elfbar"). Поки порожньо — демо-режим, перемикачі зберігаються лише в цьому браузері.
-  API_URL: "",
+  API_URL: "https://script.google.com/macros/s/AKfycbyuvQ_xDCmBRTvwXckJdxxjnI9ykaRAyGgPSvv11nPgUhKImQrVJwq-9knSVOxlcmWPGA/exec",
   ORDER_USERNAME: "Elfbarfreiburgde"
 };
 
