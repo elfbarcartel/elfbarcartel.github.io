@@ -124,16 +124,16 @@ header .langs{position:absolute;top:0;right:0;flex-direction:column}
 <script>
 const T={
  uk:{cats:{all:"Все",disposable:"Одноразки",liquid:"Рідини",pod:"Поди"},search:"Пошук моделі або смаку",flavors:n=>n+" "+(n%10==1&&n%100!=11?"смак":(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?"смаки":"смаків"),back:"Назад",choose:"Вибери смаки",added:f=>f+" додано в кошик",cart:"Кошик",items:n=>"Кошик · "+n,open:"Відкрити",pick:"Як отримати",order:"Замовити в Telegram",clear:"Очистити кошик",needPick:"Обери, як отримати замовлення",emptyCat:"Зараз у цій категорії нічого немає",emptyCart:"Кошик порожній",noFound:"Нічого не знайдено",
-  opts:{haid:"Самовивіз Haid",tf:"Самовивіз Technische Fakultät",kirch:"Самовивіз Kirchzarten",del:"Доставка",chat:"Домовимось у чаті"},
-  msgHi:"Привіт! Хочу замовити:",msgPick:{haid:"Хочу забрати: Haid",tf:"Хочу забрати: Technische Fakultät",kirch:"Хочу забрати: Kirchzarten",del:"Хочу доставку",chat:"Місце і час зустрічі домовимось у чаті"},
+  opts:{haid:"Самовивіз Haid",tf:"Самовивіз Technische Fakultät",kirch:"Самовивіз Kirchzarten",del:"Доставка +5 €",chat:"Домовимось у чаті"},
+  msgHi:"Привіт! Хочу замовити:",msgPick:{haid:"Хочу забрати: Haid",tf:"Хочу забрати: Technische Fakultät",kirch:"Хочу забрати: Kirchzarten",del:"Хочу доставку (+5 €)",chat:"Місце і час зустрічі домовимось у чаті"},
   gT:"Тобі вже є 21?",gX:"Магазин нікотинової продукції. Вхід тільки для повнолітніх.",gY:"Так, мені є 21",gN:"Ні"},
  de:{cats:{all:"Alle",disposable:"Einweg",liquid:"Liquids",pod:"Pods"},search:"Modell oder Geschmack suchen",flavors:n=>n+(n==1?" Geschmack":" Geschmäcker"),back:"Zurück",choose:"Geschmack wählen",added:f=>f+" im Warenkorb",cart:"Warenkorb",items:n=>"Warenkorb · "+n,open:"Öffnen",pick:"Abholung oder Lieferung",order:"In Telegram bestellen",clear:"Warenkorb leeren",needPick:"Wähle Abholung oder Lieferung",emptyCat:"In dieser Kategorie ist gerade nichts da",emptyCart:"Warenkorb ist leer",noFound:"Nichts gefunden",
-  opts:{haid:"Abholung Haid",tf:"Abholung Technische Fakultät",kirch:"Abholung Kirchzarten",del:"Lieferung",chat:"Im Chat absprechen"},
-  msgHi:"Hallo! Ich möchte bestellen:",msgPick:{haid:"Abholung: Haid",tf:"Abholung: Technische Fakultät",kirch:"Abholung: Kirchzarten",del:"Ich möchte Lieferung",chat:"Ort und Zeit sprechen wir im Chat ab"},
+  opts:{haid:"Abholung Haid",tf:"Abholung Technische Fakultät",kirch:"Abholung Kirchzarten",del:"Lieferung +5 €",chat:"Im Chat absprechen"},
+  msgHi:"Hallo! Ich möchte bestellen:",msgPick:{haid:"Abholung: Haid",tf:"Abholung: Technische Fakultät",kirch:"Abholung: Kirchzarten",del:"Ich möchte Lieferung (+5 €)",chat:"Ort und Zeit sprechen wir im Chat ab"},
   gT:"Bist du mindestens 21?",gX:"Shop für Nikotinprodukte. Nur für Volljährige.",gY:"Ja, ich bin 21+",gN:"Nein"},
  ru:{cats:{all:"Все",disposable:"Одноразки",liquid:"Жидкости",pod:"Поды"},search:"Поиск модели или вкуса",flavors:n=>n+" "+(n%10==1&&n%100!=11?"вкус":(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?"вкуса":"вкусов"),back:"Назад",choose:"Выбери вкусы",added:f=>f+" добавлен в корзину",cart:"Корзина",items:n=>"Корзина · "+n,open:"Открыть",pick:"Как получить",order:"Заказать в Telegram",clear:"Очистить корзину",needPick:"Выбери, как получить заказ",emptyCat:"Сейчас в этой категории ничего нет",emptyCart:"Корзина пуста",noFound:"Ничего не найдено",
-  opts:{haid:"Самовывоз Haid",tf:"Самовывоз Technische Fakultät",kirch:"Самовывоз Kirchzarten",del:"Доставка",chat:"Договоримся в чате"},
-  msgHi:"Привет! Хочу заказать:",msgPick:{haid:"Хочу забрать: Haid",tf:"Хочу забрать: Technische Fakultät",kirch:"Хочу забрать: Kirchzarten",del:"Хочу доставку",chat:"Место и время встречи договоримся в чате"},
+  opts:{haid:"Самовывоз Haid",tf:"Самовывоз Technische Fakultät",kirch:"Самовывоз Kirchzarten",del:"Доставка +5 €",chat:"Договоримся в чате"},
+  msgHi:"Привет! Хочу заказать:",msgPick:{haid:"Хочу забрать: Haid",tf:"Хочу забрать: Technische Fakultät",kirch:"Хочу забрать: Kirchzarten",del:"Хочу доставку (+5 €)",chat:"Место и время встречи договоримся в чате"},
   gT:"Тебе уже есть 21?",gX:"Магазин никотиновой продукции. Вход только для совершеннолетних.",gY:"Да, мне есть 21",gN:"Нет"}
 };
 const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
