@@ -102,7 +102,7 @@ header .langs{position:absolute;top:0;right:0;flex-direction:column}
 
 <div class="wrap">
   <header>
-    <a href="https://t.me/c/3423858824" id="logoLink" aria-label="Telegram"><img class="logo" src="logo.webp" alt="Elf Bar Cartel"></a>
+    <img class="logo" src="logo.webp" alt="Elf Bar Cartel">
     <div class="langs" id="langs"></div>
   </header>
   <div id="view"></div>
@@ -211,7 +211,6 @@ $("openCart").onclick=()=>{$("err").textContent="";$("sheet").classList.add("on"
 $("closeCart").onclick=()=>$("sheet").classList.remove("on");
 $("sheet").onclick=e=>{if(e.target.id==="sheet")$("sheet").classList.remove("on")};
 $("orderBtn").onclick=order;
-$("logoLink").onclick=e=>{if(tg&&tg.initData&&tg.openTelegramLink){e.preventDefault();tg.openTelegramLink("https://t.me/c/3423858824")}else{e.preventDefault();const a=document.createElement("a");a.href="https://t.me/c/3423858824";a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}};
 $("clearBtn").onclick=()=>{S.cart={};save();$("sheet").classList.remove("on");render()};
 function gate(){
   const g=$("gate"); if(store.get("age_ok",false)){g.classList.remove("on");return}

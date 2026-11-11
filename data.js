@@ -46,9 +46,20 @@ function swipe(){
     if(S.q.trim())return;
     var order=["all"].concat(Object.keys(CATALOG)),i=order.indexOf(S.cat)+(dx<0?1:-1);
     if(i<0||i>=order.length)return;S.cat=order[i];render();
-    var g=document.querySelector(".grid");if(g&&g.animate)g.animate([{transform:"translateX("+(dx<0?60:-60)+"px)",opacity:0},{transform:"none",opacity:1}],{duration:260,easing:"ease-out"});
+    var g=document.querySelector(".grid");if(false)g.animate([{transform:"translateX("+(dx<0?60:-60)+"px)",opacity:0},{transform:"none",opacity:1}],{duration:260,easing:"ease-out"});
   },{passive:true});
 }
 document.addEventListener("DOMContentLoaded",function(){document.head.appendChild(st);scan();new MutationObserver(scan).observe(document.body,{childList:true,subtree:true});if(document.getElementById("view"))swipe()});
 for(var u in OPT)if(u.indexOf("bing.net")>0)cut(u).catch(function(){});
 })();
+(function(){var last=null,lastM=null;
+function order(){return ["all"].concat(Object.keys(CATALOG))}
+document.addEventListener("DOMContentLoaded",function(){var orig=window.render;if(typeof orig!=="function"||!document.getElementById("view"))return;
+window.render=function(){var pc=last,pm=lastM;orig.apply(this,arguments);last=S.cat;lastM=S.model;
+var v=document.getElementById("view"),g=document.querySelector(".grid");if(!v.animate)return;
+if(pm!==S.model){v.animate([{opacity:0,transform:"translateY(16px)"},{opacity:1,transform:"none"}],{duration:300,easing:"cubic-bezier(.2,.8,.2,1)"});return}
+if(pc!==null&&pc!==S.cat&&g){var o=order(),dir=o.indexOf(S.cat)>o.indexOf(pc)?1:-1;
+g.animate([{opacity:0,transform:"translateX("+(dir*70)+"px) scale(.97)"},{opacity:1,transform:"none"}],{duration:340,easing:"cubic-bezier(.2,.8,.2,1)"});
+[].forEach.call(g.children,function(c,i){if(i<8)c.animate([{opacity:0,transform:"translateX("+(dir*30)+"px)"},{opacity:1,transform:"none"}],{duration:300,delay:40*i,easing:"ease-out",fill:"backwards"})});
+var t=document.querySelector(".tabs .on");if(t&&t.animate)t.animate([{transform:"scale(.9)"},{transform:"scale(1.07)"},{transform:"scale(1)"}],{duration:320})}};
+last=S.cat;lastM=S.model;});})();
