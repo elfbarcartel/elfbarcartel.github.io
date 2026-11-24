@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Наявність · Elfbar Freiburg</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="config.js"></script>
 <script src="data.js"></script>
 <style>
@@ -34,7 +35,8 @@ input{width:100%;background:var(--card);border:1px solid var(--line);border-radi
 <div class="wrap" id="app"></div>
 <div class="st" id="st"></div>
 <script>
-const key=new URLSearchParams(location.hash.slice(1)).get("k")||"";
+const key=new URLSearchParams(location.search).get("k")||new URLSearchParams(location.hash.slice(1)).get("k")||"";
+try{const tg=window.Telegram&&Telegram.WebApp;if(tg){tg.ready();tg.expand();tg.setHeaderColor&&tg.setHeaderColor("#0a0a0b");tg.setBackgroundColor&&tg.setBackgroundColor("#0a0a0b")}}catch(e){}
 const app=document.getElementById("app");
 const CN={disposable:"Одноразки",liquid:"Рідини"};
 let off=new Set(),cat="disposable",q="";
